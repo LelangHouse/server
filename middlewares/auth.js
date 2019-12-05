@@ -8,7 +8,7 @@ function authentication(req, res, next) {
         User.findById(decodedToken.id)
             .then(user => {
                 if(user) {
-                    req.loggedUser = decodedToken
+                    req.loggedUser = user
                     next()
                 } else {
                     next({ status: 401, message: 'Authentication failed' })

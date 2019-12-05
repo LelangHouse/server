@@ -1,5 +1,10 @@
 const Product = require('../models/product')
 const deletegcs = require('../helpers/deletegcs')
+const twilio = require('twilio')
+const client = twilio(
+    process.env.ACCOUNT_SID,
+    process.env.AUTH_TOKEN
+);
 
 class ProductController {
   static create(req, res, next) {
@@ -30,6 +35,22 @@ class ProductController {
         res.status(200).json(result)
       })
       .catch(next)
+  }
+
+  static shareWa(req,res,next){
+    client.messages
+ .create({
+   from: 'whatsapp:+14155238886',
+   to: `whatsapp:${req.loggedUser.phoneNumber}`,
+   body: 'hallo kami dari lelang-house',
+   mediaUrl: req.body.url,
+ })
+ .then(message => {
+   res.status(200).json('send via WA')
+ })
+ .catch(err => {
+   console.error(err);
+ });
   }
 }
 

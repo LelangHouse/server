@@ -5,5 +5,6 @@ const upload = require('../middlewares/gcsUpload')
 
 router.use('/', authentication)
 router.post('/', upload.single('image'), ProductController.create)
+router.post('/shareWa', ProductController.shareWa)
 
 module.exports = router

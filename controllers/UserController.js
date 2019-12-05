@@ -6,7 +6,8 @@ class UserController {
     static register(req, res, next) {
         let objUser = {
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            phoneNumber: req.body.phoneNumber
         }
         User.create(objUser)
             .then(result => {
@@ -25,7 +26,8 @@ class UserController {
                 if(user && comparePassword(req.body.password, user.password)) {
                     let payload = {
                         id: user._id,
-                        email: user.email
+                        email: user.email,
+                        phoneNumber: user.phoneNumber
                     }
                     let token = generateToken(payload)
                     res.status(200).json({ token })

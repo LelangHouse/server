@@ -25,7 +25,8 @@
     "express": "^4.17.1",
     "gcs-upload": "^1.1.2",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.7.13"
+    "mongoose": "^5.7.13",
+    "twilio": "^3.38.0"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",

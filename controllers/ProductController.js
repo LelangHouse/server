@@ -11,11 +11,19 @@ class ProductController {
     Product.create({
       image: req.body.image,
       price: req.body.price,
-      bid: 0,
+      bid: req.body.price,
       user_id: req.loggedUser.id
     })
       .then(result => {
         res.status(201).json(result)
+      })
+      .catch(next)
+  }
+
+  static read(req, res, next) {
+    Product.find({})
+      .then(result => {
+        res.status(200).json(result)
       })
       .catch(next)
   }
@@ -51,6 +59,27 @@ class ProductController {
  .catch(err => {
    console.error(err);
  });
+  }
+
+  static update(req, res, next){
+    let id = req.params.id
+    let { bid } = req.body
+    let value = {
+      bid: bid
+    }
+
+    Product
+      .findById(id)
+      .then(product => {
+        if(req.body.bid < product.bid){
+          value.bid = undefined
+        }
+        return Product.findByIdAndUpdate(id, value, { new: true, omitUndefined: true })
+      })
+      .then(result => {
+        res.status(200).json(result)
+      })
+      .catch(next)
   }
 }
 
